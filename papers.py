@@ -1,61 +1,68 @@
 from collections import defaultdict
 
 
+def covert_input_into_arrays():
+    with open("governin.txt", 'r') as reader:
+        data = [tuple(line.split()) for line in reader]
+    return data
+
+
+
+def find_the_first_one(data):
+    temp1 = []
+    temp2 = []
+    for edge in data:
+        temp1.append(edge[0])
+        temp2.append(edge[1])
+    x = str(list[0](set(temp1) - set(temp2)))
+    x = x.replace("['", "")
+    x = x.replace("']", "")
+    return x
+
 
 class Graph:
 
-    # Constructor
     def __init__(self):
-
-        # default dictionary to store graph
         self.graph = defaultdict(list)
 
-    # function to add an edge to graph
-    def addEdge(self, u, v):
-        self.graph[u].append(v)
+    def add_edge(self, my_tuple):
+        first, second = my_tuple
+        self.graph[first].append(second)
 
-    # A function used by DFS
-    def DFSUtil(self, v, visited):
+    def dfs_util(self, v, visited):
 
-        # Mark the current node as visited
-        # and print it
         stack = []
         visited.add(v)
         stack.append(v)
 
-        # Recur for all the vertices
-        # adjacent to this vertex
         for neighbour in self.graph[v]:
             if neighbour not in visited:
-                self.DFSUtil(neighbour, visited)
-        print(stack)
-    # The function to do DFS traversal. It uses
-    # recursive DFSUtil()
-    def DFS(self, v):
+                self.dfs_util(neighbour, visited)
+        x = str(stack)
+        x = x.replace("['", "")
+        x = x.replace("']", "")
+        print(x)
 
-        # Create a set to store visited vertices
+    def dfs(self, v):
+
         visited = set()
+        self.dfs_util(v, visited)
 
-        # Call the recursive helper function
-        # to print DFS traversal
-        self.DFSUtil(v, visited)
+    def fillout(self, array):
+
+        for edge in array:
+            self.add_edge(edge)
 
 
 def main():
- # Set to keep track of visited nodes of graph.
-    print("Following is the Depth-First Search")
-    g = Graph()
-    g.addEdge("visa", "foreignpassport")
-    g.addEdge("visa", "hotel")
-    g.addEdge("visa", "bankstatement")
-    g.addEdge("bankstatement", "nationalpassport")
-    g.addEdge("hotel", "creditcard")
-    g.addEdge("creditcard", "nationalpassport")
-    g.addEdge("nationalpassport", "birthsertificate")
-    g.addEdge("foreignpassport", "nationalpassport")
-    g.addEdge("foreignpassport", "militarycertificate")
-    g.addEdge("militarycertificate", "nationalpassport")
-    g.DFS('visa')
+    graph = Graph()
+    data = covert_input_into_arrays()
+    graph.fillout(data)
+    source = find_the_first_one(data)
+    graph.dfs(source)
+
+    # print(stack)
+    # output(stack)
 
 
 if __name__ == '__main__':
